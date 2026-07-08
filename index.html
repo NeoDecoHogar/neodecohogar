@@ -3,7 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
-<title>NeoDeco — Velas aromáticas y aromatizadores</title>
+<title>NeoDeco — Catálogo Julio 2026</title>
+<meta name="description" content="Difusores, velas souvenir y velas aromáticas en los aromas de NeoDeco. Armá tu pedido y coordinamos por WhatsApp.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://neodecohogar.github.io/neodecohogar/">
+<meta property="og:title" content="NeoDeco — Catálogo Julio 2026">
+<meta property="og:description" content="Difusores, velas souvenir y velas aromáticas en los aromas de NeoDeco. Armá tu pedido y coordinamos por WhatsApp.">
+<meta property="og:image" content="https://neodecohogar.github.io/neodecohogar/assets/og_image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NeoDeco — Catálogo Julio 2026">
+<meta name="twitter:description" content="Difusores, velas souvenir y velas aromáticas en los aromas de NeoDeco.">
+<meta name="twitter:image" content="https://neodecohogar.github.io/neodecohogar/assets/og_image.jpg">
+<link rel="icon" href="assets/logo_black.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -127,6 +138,7 @@
     <div style="display:flex;justify-content:space-between;font-size:15px;font-weight:600;margin-bottom:12px;">
       <span>Total</span><span id="cartTotal">$0</span>
     </div>
+    <input type="text" id="customerName" class="arom-select" placeholder="Tu nombre (opcional)" style="margin-bottom:10px;">
     <button class="wa-btn" id="checkoutBtn">📲 Finalizar por WhatsApp</button>
     <button class="ghost-btn" id="clearBtn" style="width:100%;margin-top:8px;">Vaciar carrito</button>
     <p style="font-size:11px;color:var(--text-muted);margin-top:10px;">Al finalizar se abre WhatsApp con el pedido armado para coordinar pago y envío.</p>
@@ -166,7 +178,7 @@ const aromaticaFormats = [
   {name:"Caramelera", price:8500, img:"VA-CARAMEL"}
 ];
 const aromasBombones = ["Coco vainilla","Pitanga","Limón dulce","Tutti frutti","Jazmín","Frutos rojos"];
-const formasBombones = ["Surtido","Donuts","Corazones","Estrellitas","Letras","Floricitas","Tabletitas","Tréboles"];
+const formasBombones = ["Surtido","Donuts","Corazones","Estrellitas","Letras","Florcitas","Tabletitas","Tréboles"];
 const bombonFormats = [
   {name:"Bolsita 40g", price:3000, img:"BOMBON"},
   {name:"Cajita 100g", price:6500, img:"BOMBON"}
@@ -343,7 +355,9 @@ document.getElementById("checkoutBtn").addEventListener("click", () => {
   });
   const total = keys.reduce((s,k) => s + cart[k].qty*(cart[k].price||0), 0);
   const hasUnpriced = keys.some(k => cart[k].price == null);
-  const msg = `Hola! Quiero hacer este pedido a NeoDeco:\n${lines.join("\n")}\nTotal: ${fmt(total)}${hasUnpriced ? " (+ items a confirmar)" : ""}`;
+  const name = document.getElementById("customerName").value.trim();
+  const greeting = name ? `Hola! Soy ${name}, quiero hacer este pedido a NeoDeco:` : `Hola! Quiero hacer este pedido a NeoDeco:`;
+  const msg = `${greeting}\n${lines.join("\n")}\nTotal: ${fmt(total)}${hasUnpriced ? " (+ items a confirmar)" : ""}`;
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
 });
 
