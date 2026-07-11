@@ -218,12 +218,22 @@ try { cart = JSON.parse(localStorage.getItem("ndh_cart2") || "{}"); } catch(e) {
 const fmt = n => (n === null || n === undefined) ? "A confirmar" : "$" + Math.round(n).toLocaleString("es-AR");
 const saveCart = () => { try { localStorage.setItem("ndh_cart2", JSON.stringify(cart)); } catch(e) {} };
 
+function slugify(s){
+  return s.toString().normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+}
+
 function renderFilters(){
   document.getElementById("filters").innerHTML = cats.map(c =>
     `<button class="filter-btn${c===activeCat?" active":""}" data-cat="${c}">${c}</button>`
   ).join("");
   document.querySelectorAll(".filter-btn").forEach(btn =>
-    btn.addEventListener("click", () => { activeCat = btn.dataset.cat; renderFilters(); renderGrid(); })
+    btn.addEventListener("click", () => {
+      activeCat = btn.dataset.cat;
+      trackEvent("categoria/" + slugify(activeCat), activeCat);
+      renderFilters();
+      renderGrid();
+    })
   );
 }
 
@@ -289,7 +299,7 @@ function trackEvent(path, title){
 }
 
 function addToCart(card, aroma, color, shape, tipo){
-  trackEvent("agregar-carrito", card.name);
+  trackEvent("agregar/" + slugify(card.name), card.name);
   const key = card.fid + "::" + aroma + (color ? "::" + color : "") + (shape ? "::" + shape : "") + (tipo ? "::" + tipo : "");
   const price = tipo === "Refill" ? card.refillPrice : card.price;
   if (cart[key]) {
@@ -360,6 +370,7 @@ document.getElementById("checkoutBtn").addEventListener("click", () => {
   const keys = Object.keys(cart);
   if (keys.length === 0) return;
   trackEvent("finalizar-whatsapp", "Checkout WhatsApp");
+  keys.forEach(k => trackEvent("pedido/" + slugify(cart[k].name), cart[k].name));
   const lines = keys.map(k => {
     const it = cart[k];
     const lineTotal = it.price == null ? "a confirmar" : fmt(it.price*it.qty);
