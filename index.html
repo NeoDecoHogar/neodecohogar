@@ -39,7 +39,9 @@
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html{-webkit-text-size-adjust:100%;}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:'Work Sans',system-ui,sans-serif;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Work Sans',system-ui,sans-serif;-webkit-user-select:none;-moz-user-select:none;user-select:none;}
+  input,textarea,select{-webkit-user-select:text;-moz-user-select:text;user-select:text;}
+  img{-webkit-touch-callout:none;}
   h1,h2,.brand{font-family:'Poppins',system-ui,sans-serif;}
   header{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
   .brand{font-size:25px;font-weight:600;color:var(--brand-dark);margin:0;letter-spacing:.2px;}
@@ -102,6 +104,7 @@
     #cartPanel{width:100vw;max-width:100vw;}
   }
 </style>
+<script data-goatcounter="https://neodeco.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 
@@ -277,7 +280,16 @@ function renderGrid(){
   );
 }
 
+function trackEvent(path, title){
+  try {
+    if (window.goatcounter && window.goatcounter.count) {
+      window.goatcounter.count({path: path, title: title || path, event: true});
+    }
+  } catch(e) {}
+}
+
 function addToCart(card, aroma, color, shape, tipo){
+  trackEvent("agregar-carrito", card.name);
   const key = card.fid + "::" + aroma + (color ? "::" + color : "") + (shape ? "::" + shape : "") + (tipo ? "::" + tipo : "");
   const price = tipo === "Refill" ? card.refillPrice : card.price;
   if (cart[key]) {
@@ -347,6 +359,7 @@ document.getElementById("clearBtn").addEventListener("click", () => { cart = {};
 document.getElementById("checkoutBtn").addEventListener("click", () => {
   const keys = Object.keys(cart);
   if (keys.length === 0) return;
+  trackEvent("finalizar-whatsapp", "Checkout WhatsApp");
   const lines = keys.map(k => {
     const it = cart[k];
     const lineTotal = it.price == null ? "a confirmar" : fmt(it.price*it.qty);
@@ -364,6 +377,11 @@ document.getElementById("checkoutBtn").addEventListener("click", () => {
 renderFilters();
 renderGrid();
 renderCart();
+
+// Protección básica anti-copia (disuasiva, no infalible): bloquea click derecho
+// y arrastre de imágenes. No afecta la posibilidad de tipear en el campo de nombre.
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => { if (e.target.tagName === "IMG") e.preventDefault(); });
 </script>
 </body>
 </html>
