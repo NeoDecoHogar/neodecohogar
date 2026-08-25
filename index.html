@@ -88,6 +88,7 @@
   .swatch-row{display:flex;gap:7px;flex-wrap:wrap;}
   .swatch-dot{width:26px;height:26px;border-radius:999px;border:2px solid transparent;box-shadow:inset 0 0 0 1px rgba(62,46,34,0.12);cursor:pointer;padding:0;}
   .swatch-dot.selected{border-color:var(--brand);}
+  .swatch-label{font-size:11px;color:var(--text-muted);margin-top:3px;}
   .chip-select{border:1px solid var(--border);background:var(--card);border-radius:999px;padding:6px 12px;font-size:11.5px;cursor:pointer;color:var(--text);}
   .chip-select.selected{background:var(--brand);color:#fff;border-color:var(--brand);}
   .chip-row{display:flex;gap:6px;flex-wrap:wrap;}
@@ -327,9 +328,10 @@ function renderFilters(){
 
 function swatchRow(fid, field, options){
   const sel = selection[fid][field];
-  return `<div class="swatch-row">${options.map(o =>
+  const dots = options.map(o =>
     `<button type="button" class="swatch-dot${o.name===sel?" selected":""}" style="background:${o.color};" title="${o.name}" data-fid="${fid}" data-field="${field}" data-value="${o.name}" aria-label="${o.name}"></button>`
-  ).join("")}</div>`;
+  ).join("");
+  return `<div class="swatch-row">${dots}</div><div class="swatch-label">${sel}</div>`;
 }
 
 function chipRow(fid, field, options){
@@ -337,6 +339,39 @@ function chipRow(fid, field, options){
   return `<div class="chip-row">${options.map(name =>
     `<button type="button" class="chip-select${name===sel?" selected":""}" data-fid="${fid}" data-field="${field}" data-value="${name}">${name}</button>`
   ).join("")}</div>`;
+}
+
+function variantHTML(p, sel){
+  const tipoBlock = p.refillPrice != null
+    ? `<div class="field-label">Tipo</div>${chipRow(p.fid, "tipo", ["Nuevo","Refill"])}`
+    : "";
+  const colorBlock = p.colors
+    ? `<div class="field-label">Color</div>${swatchRow(p.fid, "color", p.colors)}`
+    : "";
+  const shapeBlock = p.shapes
+    ? `<div class="field-label">Forma</div>${chipRow(p.fid, "shape", p.shapes)}`
+    : "";
+  const price = sel.tipo === "Refill" ? p.refillPrice : p.price;
+  const priceLabel = p.soldOut ? `<span class="p-price muted">${fmt(price)}</span>` : `<span class="p-price">${fmt(price)}</span>`;
+  const actionBtn = p.soldOut
+    ? `<button class="notify-btn" data-fid="${p.fid}" data-action="notify">Avisame</button>`
+    : `<button class="add-btn" data-fid="${p.fid}" data-action="add">Agregar</button>`;
+
+  return `
+    ${tipoBlock}
+    ${colorBlock}
+    ${shapeBlock}
+    <div class="p-row">
+      ${priceLabel}
+      ${actionBtn}
+    </div>`;
+}
+
+function updateCardVariant(fid){
+  const p = formatCards.find(f => f.fid === fid);
+  const container = document.getElementById("variant-" + fid);
+  if (!p || !container) return;
+  container.innerHTML = variantHTML(p, selection[fid]);
 }
 
 function renderGrid(){
@@ -350,27 +385,12 @@ function renderGrid(){
       ? `<img src="assets/${p.img}.jpg" alt="${p.name}" loading="lazy">`
       : `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:30px;">${p.icon}</div>`;
 
-    const tipoBlock = p.refillPrice != null
-      ? `<div class="field-label">Tipo</div>${chipRow(p.fid, "tipo", ["Nuevo","Refill"])}`
-      : "";
-    const colorBlock = p.colors
-      ? `<div class="field-label">Color</div>${swatchRow(p.fid, "color", p.colors)}`
-      : "";
-    const shapeBlock = p.shapes
-      ? `<div class="field-label">Forma</div>${chipRow(p.fid, "shape", p.shapes)}`
-      : "";
     const aromaOptions = p.aromas
       ? p.aromas.map(a => `<option value="${a.name}"${a.name===sel.aroma?" selected":""}>${a.name}</option>`).join("")
       : "";
     const aromaBlock = p.aromas
       ? `<select class="arom-select" data-fid="${p.fid}" data-field="aroma">${aromaOptions}</select>`
       : "";
-
-    const price = sel.tipo === "Refill" ? p.refillPrice : p.price;
-    const priceLabel = p.soldOut ? `<span class="p-price muted">${fmt(price)}</span>` : `<span class="p-price">${fmt(price)}</span>`;
-    const actionBtn = p.soldOut
-      ? `<button class="notify-btn" data-fid="${p.fid}" data-action="notify">Avisame</button>`
-      : `<button class="add-btn" data-fid="${p.fid}" data-action="add">Agregar</button>`;
 
     return `
     <div class="card${soldOutClass}">
@@ -381,38 +401,37 @@ function renderGrid(){
       </div>
       <p class="p-name${p.soldOut ? " muted" : ""}">${p.name}</p>
       ${p.note ? `<p class="p-note">${p.note}</p>` : ""}
-      ${tipoBlock}
-      ${colorBlock}
-      ${shapeBlock}
       ${aromaBlock}
-      <div class="p-row">
-        ${priceLabel}
-        ${actionBtn}
-      </div>
+      <div id="variant-${p.fid}">${variantHTML(p, sel)}</div>
     </div>`;
   }).join("");
-
-  document.querySelectorAll(".swatch-dot, .chip-select").forEach(el =>
-    el.addEventListener("click", () => {
-      const { fid, field, value } = el.dataset;
-      selection[fid][field] = value;
-      renderGrid();
-    })
-  );
-  document.querySelectorAll("select[data-fid]").forEach(sel =>
-    sel.addEventListener("change", () => {
-      const { fid, field } = sel.dataset;
-      selection[fid][field] = sel.value;
-      renderGrid();
-    })
-  );
-  document.querySelectorAll("[data-action='add']").forEach(btn =>
-    btn.addEventListener("click", () => addToCart(formatCards.find(f => f.fid === btn.dataset.fid)))
-  );
-  document.querySelectorAll("[data-action='notify']").forEach(btn =>
-    btn.addEventListener("click", () => notifyStock(formatCards.find(f => f.fid === btn.dataset.fid)))
-  );
 }
+
+document.getElementById("grid").addEventListener("click", e => {
+  const dot = e.target.closest(".swatch-dot, .chip-select");
+  if (dot) {
+    const { fid, field, value } = dot.dataset;
+    selection[fid][field] = value;
+    updateCardVariant(fid);
+    return;
+  }
+  const addBtn = e.target.closest("[data-action='add']");
+  if (addBtn) {
+    addToCart(formatCards.find(f => f.fid === addBtn.dataset.fid));
+    return;
+  }
+  const notifyBtn = e.target.closest("[data-action='notify']");
+  if (notifyBtn) {
+    notifyStock(formatCards.find(f => f.fid === notifyBtn.dataset.fid));
+    return;
+  }
+});
+document.getElementById("grid").addEventListener("change", e => {
+  const sel = e.target.closest("select[data-fid]");
+  if (!sel) return;
+  const { fid, field } = sel.dataset;
+  selection[fid][field] = sel.value;
+});
 
 function trackEvent(path, title){
   try {
