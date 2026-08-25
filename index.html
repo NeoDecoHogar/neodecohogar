@@ -16,7 +16,7 @@
 <meta name="twitter:image" content="https://neodecohogar.github.io/neodecohogar/assets/og_image.jpg">
 <link rel="icon" href="assets/logo_black.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --brand:#8A5A3B;
@@ -49,36 +49,66 @@
   #logoImg{height:74px;display:block;}
   #cartToggle{position:relative;background:var(--brand);color:#fff;border:none;border-radius:999px;width:44px;height:44px;min-width:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;flex-shrink:0;}
   #cartBadge{position:absolute;top:-4px;right:-4px;background:var(--coral);color:#fff;font-size:11px;font-weight:600;border-radius:999px;min-width:18px;height:18px;display:flex;align-items:center;justify-content:center;padding:0 4px;}
-  .hero{padding:28px 20px 8px;max-width:760px;}
-  .hero h1{font-size:24px;font-weight:600;margin:0 0 6px;color:var(--brand-dark);}
-  .hero p{font-size:14px;color:var(--text-muted);margin:0;line-height:1.5;}
+
+  /* Hero */
+  .hero-banner{position:relative;width:100%;max-width:900px;margin:0 auto;aspect-ratio:3/2;overflow:hidden;}
+  .hero-banner img{width:100%;height:100%;object-fit:cover;display:block;}
+  .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(62,46,34,0.78) 0%, rgba(62,46,34,0.42) 45%, rgba(62,46,34,0) 72%);}
+  .hero-content{position:absolute;left:0;right:0;top:0;padding:22px 20px;max-width:760px;margin:0 auto;}
+  .hero-kicker{font-size:11px;font-weight:600;letter-spacing:.6px;color:var(--cream);text-transform:uppercase;opacity:.85;}
+  .hero-content h1{margin:6px 0 0;font-size:26px;font-weight:600;color:var(--card);line-height:1.2;}
+  .hero-content p{margin:8px 0 0;font-size:13.5px;color:var(--cream);line-height:1.5;max-width:420px;}
+  .hero-cta{display:inline-flex;align-items:center;gap:6px;background:var(--card);color:var(--brand-dark);font-family:'Poppins',system-ui,sans-serif;font-weight:600;font-size:13.5px;padding:11px 18px;border-radius:999px;margin-top:14px;text-decoration:none;}
+
+  /* Trust strip */
+  .trust-strip{display:flex;justify-content:space-between;gap:6px;padding:16px 20px;max-width:1040px;margin:0 auto;background:var(--card);border-bottom:1px solid var(--border);}
+  .trust-item{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;text-align:center;}
+  .trust-item span{font-size:10.5px;color:var(--text);line-height:1.25;}
+
   .filters{display:flex;gap:8px;flex-wrap:wrap;padding:20px;max-width:1040px;margin:0 auto;-webkit-overflow-scrolling:touch;}
   .filter-btn{border-radius:999px;padding:8px 16px;font-size:13px;cursor:pointer;background:var(--card);border:1px solid var(--border);color:var(--text);min-height:36px;}
   .filter-btn.active{background:var(--brand);color:#fff;border-color:var(--brand);}
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;padding:0 20px 40px;max-width:1040px;margin:0 auto;}
   .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px;transition:box-shadow .15s;}
   .card:hover{box-shadow:0 4px 14px rgba(58,46,38,0.08);}
-  .swatch{aspect-ratio:1/1;height:auto;width:100%;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:30px;overflow:hidden;}
-  .swatch img{width:100%;height:100%;object-fit:cover;display:block;}
-  .swatch.contain{height:220px;background:#fff;}
-  .swatch.contain img{object-fit:contain;}
+
+  .card-photo{position:relative;width:100%;aspect-ratio:1/1;border-radius:10px;overflow:hidden;background:var(--cream);}
+  .card-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .card-photo.contain{background:#fff;}
+  .card-photo.contain img{object-fit:contain;}
+  .card.is-soldout .card-photo img{filter:grayscale(40%);opacity:.7;}
+  .cat-tag-overlay{position:absolute;top:8px;left:8px;background:rgba(255,253,249,0.92);font-size:10px;font-weight:600;padding:3px 9px;border-radius:999px;}
+  .soldout-ribbon{position:absolute;top:42%;left:0;right:0;background:rgba(62,46,34,0.85);color:var(--bg);font-size:11px;font-weight:600;text-align:center;padding:6px 0;letter-spacing:.3px;}
+
   .p-name{font-size:15px;font-weight:500;margin:0;}
-  .p-format{font-size:12px;color:var(--text-muted);margin:0;}
-  .p-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;margin-top:2px;}
+  .p-name.muted{color:var(--text-muted);}
   .p-note{font-size:11px;color:var(--coral);margin:2px 0 0;font-style:italic;}
-  .arom-select{width:100%;font-size:14px;padding:9px 8px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);margin-top:4px;min-height:40px;}
+
+  .field-label{font-size:10.5px;color:var(--text-muted);margin:4px 0 -2px;}
+  .swatch-row{display:flex;gap:7px;flex-wrap:wrap;}
+  .swatch-dot{width:26px;height:26px;border-radius:999px;border:2px solid transparent;box-shadow:inset 0 0 0 1px rgba(62,46,34,0.12);cursor:pointer;padding:0;}
+  .swatch-dot.selected{border-color:var(--brand);}
+  .chip-select{border:1px solid var(--border);background:var(--card);border-radius:999px;padding:6px 12px;font-size:11.5px;cursor:pointer;color:var(--text);}
+  .chip-select.selected{background:var(--brand);color:#fff;border-color:var(--brand);}
+  .chip-row{display:flex;gap:6px;flex-wrap:wrap;}
+
   .p-row{display:flex;align-items:center;justify-content:space-between;margin-top:6px;}
   .p-price{font-size:16px;font-weight:600;color:var(--brand-dark);}
+  .p-price.muted{color:var(--text-muted);}
   .add-btn{background:var(--brand);color:#fff;border:none;border-radius:8px;padding:10px 14px;font-size:13px;cursor:pointer;min-height:40px;}
   .add-btn:hover{background:var(--brand-dark);}
+  .notify-btn{background:transparent;border:1px solid var(--border);color:var(--text-muted);border-radius:8px;padding:10px 14px;font-size:12.5px;cursor:pointer;min-height:40px;}
+
   #overlay{position:fixed;inset:0;background:rgba(58,46,38,0.35);display:none;z-index:30;}
   #cartPanel{position:fixed;top:0;right:0;height:100%;width:340px;max-width:92vw;background:var(--card);z-index:31;box-shadow:-6px 0 24px rgba(0,0,0,0.12);transform:translateX(100%);transition:transform .2s ease;display:flex;flex-direction:column;padding:20px;padding-bottom:calc(20px + env(safe-area-inset-bottom));}
   #cartPanel.open{transform:translateX(0);}
   #overlay.open{display:block;}
   .cart-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);gap:8px;}
+  .cart-item-photo{width:42px;height:42px;border-radius:8px;object-fit:cover;flex-shrink:0;background:var(--cream);}
   .qty-btn{background:var(--cream);border:none;border-radius:6px;width:30px;height:30px;cursor:pointer;font-size:14px;flex-shrink:0;}
   .ghost-btn{background:transparent;border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:13px;cursor:pointer;min-height:40px;}
   .wa-btn{background:var(--whatsapp);color:#fff;border:none;border-radius:8px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;min-height:46px;}
+  .arom-select{width:100%;font-size:14px;padding:9px 8px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);margin-top:4px;min-height:40px;}
   footer{padding:24px 20px 40px;text-align:center;font-size:12px;color:var(--text-muted);max-width:760px;margin:0 auto;}
 
   /* --- Mobile tuning: la mayoría de las visitas van a llegar desde el celular
@@ -89,9 +119,10 @@
     .tagline{font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:46vw;}
     .brand{font-size:20px;}
     #logoImg{height:56px;}
-    .hero{padding:20px 16px 6px;}
-    .hero h1{font-size:20px;}
-    .hero p{font-size:13px;}
+    .hero-content{padding:18px 16px;}
+    .hero-content h1{font-size:22px;}
+    .hero-content p{font-size:13px;}
+    .trust-strip{padding:14px 16px;}
     .filters{padding:14px 16px;gap:6px;}
     .filter-btn{padding:7px 14px;font-size:12.5px;}
     .grid{grid-template-columns:1fr;padding:0 16px 32px;gap:14px;}
@@ -121,11 +152,36 @@
   </button>
 </header>
 
-<div class="hero">
-  <h1>Catálogo Agosto 2026</h1>
-  <p>Difusores, velas souvenir y velas aromáticas en los aromas de NeoDeco. Armá tu pedido y coordinamos por WhatsApp.</p>
+<div class="hero-banner">
+  <img src="assets/VA-CARAMEL-hero.jpg" alt="Vela aromática Caramelera de NeoDeco">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-kicker">Catálogo Agosto 2026</div>
+    <h1>Tu casa, con aroma propio</h1>
+    <p>Difusores, velas souvenir y velas aromáticas hechas a mano. Armá tu pedido y coordinamos por WhatsApp.</p>
+    <a class="hero-cta" href="#catalogo">
+      Ver catálogo
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"></path></svg>
+    </a>
+  </div>
 </div>
 
+<div class="trust-strip">
+  <div class="trust-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A5A3B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="13" height="10"></rect><path d="M14 9h4l3 3v4h-7z"></path><circle cx="6" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle></svg>
+    <span>Envío a todo<br>el país</span>
+  </div>
+  <div class="trust-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A5A3B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"></path></svg>
+    <span>Hecho a mano<br>en Argentina</span>
+  </div>
+  <div class="trust-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A5A3B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-3.8 7.1 8.5 8.5 0 0 1-8.2.6L3 21l1.9-5.9a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 8.5-8.5 8.5 8.5 0 0 1 8.5 8.5z"></path></svg>
+    <span>Pedís por<br>WhatsApp</span>
+  </div>
+</div>
+
+<div id="catalogo"></div>
 <div class="filters" id="filters"></div>
 <div class="grid" id="grid"></div>
 
@@ -153,8 +209,18 @@
 
 <script>
 const WHATSAPP_NUMBER = "5491158707134";
-const aromasDifusor = ["Limón y jengibre","Coco y vainilla","Peras y flores"];
-const aromasVelas = ["Verbena","Tutti frutti","Coco vainilla"];
+
+// Cada aroma/color lleva un color aproximado de cera para el swatch visual.
+const aromasDifusor = [
+  {name:"Limón y jengibre", color:"#D9C24B"},
+  {name:"Coco y vainilla", color:"#F3E9D2"},
+  {name:"Peras y flores", color:"#CFE0B0"}
+];
+const aromasVelas = [
+  {name:"Verbena", color:"#C9D6A0"},
+  {name:"Tutti frutti", color:"#E8A0B0"},
+  {name:"Coco vainilla", color:"#F3E9D2"}
+];
 const difusorFormats = [
   {name:"Difusor 50ml", price:5500, refillPrice:4000, img:"DIF-50"},
   {name:"Difusor 100ml", price:8000, refillPrice:6000, img:"DIF-100"},
@@ -168,7 +234,12 @@ const souvenirFormats = [
   {name:"Peonía chica", price:3000, img:"SV-PEONIAC", note:"No incluye base de madera"},
   {name:"Cactus", price:3000, img:"SV-CACTUS", note:"No incluye base de madera"}
 ];
-const conoColores = ["Champagne mate","Champagne brilloso","Rosé brilloso","Rosé mate"];
+const conoColores = [
+  {name:"Champagne mate", color:"#D8C7A1"},
+  {name:"Champagne brilloso", color:"#E4D5AE"},
+  {name:"Rosé brilloso", color:"#E3B8B4"},
+  {name:"Rosé mate", color:"#D9A9A6"}
+];
 const aromaticaFormats = [
   {name:"Cuenco de madera", price:7500, img:"VA-CUENCOM"},
   {name:"Cuenco negro", price:13500, img:"VA-CUENCON"},
@@ -179,7 +250,14 @@ const aromaticaFormats = [
   {name:"Esmerilado ámbar", price:10500, img:"VA-ESMAMB"},
   {name:"Caramelera", price:8500, img:"VA-CARAMEL"}
 ];
-const aromasBombones = ["Coco vainilla","Pitanga","Limón dulce","Tutti frutti","Jazmín","Frutos rojos"];
+const aromasBombones = [
+  {name:"Coco vainilla", color:"#F3E9D2"},
+  {name:"Pitanga", color:"#C23B5B"},
+  {name:"Limón dulce", color:"#E8D24B"},
+  {name:"Tutti frutti", color:"#E8A0B0"},
+  {name:"Jazmín", color:"#FBFAF5"},
+  {name:"Frutos rojos", color:"#B03040"}
+];
 const formasBombones = ["Surtido","Donuts","Corazones","Estrellitas","Letras","Florcitas","Tabletitas","Tréboles"];
 const bombonFormats = [
   {name:"Bolsita 40g", price:3000, img:"BOMBON"},
@@ -190,16 +268,16 @@ function buildFormatCards(){
   let list = [];
   let n = 1;
   difusorFormats.forEach(f => {
-    list.push({fid:"DIF-"+(n++), cat:"Difusores", name:f.name, price:f.price, refillPrice:f.refillPrice, tone:"teal", icon:"🎋", img:f.img, aromas:aromasDifusor});
+    list.push({fid:"DIF-"+(n++), cat:"Difusores", name:f.name, price:f.price, refillPrice:f.refillPrice, tone:"teal", icon:"🎋", img:f.img, aromas:aromasDifusor, soldOut:f.soldOut||false});
   });
   souvenirFormats.forEach(f => {
-    list.push({fid:"SV-"+(n++), cat:"Velas souvenir", name:f.name, price:f.price, tone:"amber", icon:"🕯️", img:f.img, aromas:aromasVelas, note:f.note});
+    list.push({fid:"SV-"+(n++), cat:"Velas souvenir", name:f.name, price:f.price, tone:"amber", icon:"🕯️", img:f.img, aromas:aromasVelas, note:f.note, soldOut:f.soldOut||false});
   });
   aromaticaFormats.forEach(f => {
-    list.push({fid:"VA-"+(n++), cat:"Velas aromáticas", name:f.name, price:f.price, tone:"coral", icon:"🕯️", img:f.img, aromas:aromasVelas, colors:f.colors});
+    list.push({fid:"VA-"+(n++), cat:"Velas aromáticas", name:f.name, price:f.price, tone:"coral", icon:"🕯️", img:f.img, aromas:aromasVelas, colors:f.colors, soldOut:f.soldOut||false});
   });
   bombonFormats.forEach(f => {
-    list.push({fid:"BB-"+(n++), cat:"Bombones Hornito", name:f.name, price:f.price, tone:"rose", icon:"🍫", img:f.img, aromas:aromasBombones, shapes:formasBombones, fit:"contain"});
+    list.push({fid:"BB-"+(n++), cat:"Bombones Hornito", name:f.name, price:f.price, tone:"rose", icon:"🍫", img:f.img, aromas:aromasBombones, shapes:formasBombones, fit:"contain", soldOut:f.soldOut||false});
   });
   return list;
 }
@@ -216,6 +294,17 @@ let cart = {};
 try { cart = JSON.parse(localStorage.getItem("ndh_cart2") || "{}"); } catch(e) { cart = {}; }
 const fmt = n => (n === null || n === undefined) ? "A confirmar" : "$" + Math.round(n).toLocaleString("es-AR");
 const saveCart = () => { try { localStorage.setItem("ndh_cart2", JSON.stringify(cart)); } catch(e) {} };
+
+// Selección actual de aroma/color/forma/tipo por tarjeta, aparte del carrito.
+const selection = {};
+formatCards.forEach(card => {
+  selection[card.fid] = {
+    aroma: card.aromas ? card.aromas[0].name : null,
+    color: card.colors ? card.colors[0].name : null,
+    shape: card.shapes ? card.shapes[0] : null,
+    tipo: card.refillPrice != null ? "Nuevo" : null
+  };
+});
 
 function slugify(s){
   return s.toString().normalize("NFD").replace(/[̀-ͯ]/g, "")
@@ -236,56 +325,92 @@ function renderFilters(){
   );
 }
 
+function swatchRow(fid, field, options){
+  const sel = selection[fid][field];
+  return `<div class="swatch-row">${options.map(o =>
+    `<button type="button" class="swatch-dot${o.name===sel?" selected":""}" style="background:${o.color};" title="${o.name}" data-fid="${fid}" data-field="${field}" data-value="${o.name}" aria-label="${o.name}"></button>`
+  ).join("")}</div>`;
+}
+
+function chipRow(fid, field, options){
+  const sel = selection[fid][field];
+  return `<div class="chip-row">${options.map(name =>
+    `<button type="button" class="chip-select${name===sel?" selected":""}" data-fid="${fid}" data-field="${field}" data-value="${name}">${name}</button>`
+  ).join("")}</div>`;
+}
+
 function renderGrid(){
   const list = formatCards.filter(p => activeCat === "Todos" || p.cat === activeCat);
   document.getElementById("grid").innerHTML = list.map(p => {
     const t = toneMap[p.tone];
-    const swatchInner = p.img ? `<img src="assets/${p.img}.jpg" alt="${p.name}" loading="lazy">` : p.icon;
-    const selectId = "sel-" + p.fid;
-    const options = p.aromas.map(a => `<option value="${a}">${a}</option>`).join("");
-    const colorSelectId = "col-" + p.fid;
-    const colorSelect = p.colors ? `<select class="arom-select" id="${colorSelectId}">${p.colors.map(c => `<option value="${c}">${c}</option>`).join("")}</select>` : "";
-    const shapeSelectId = "shp-" + p.fid;
-    const shapeSelect = p.shapes ? `<select class="arom-select" id="${shapeSelectId}">${p.shapes.map(s => `<option value="${s}">${s}</option>`).join("")}</select>` : "";
-    const tipoSelectId = "tipo-" + p.fid;
-    const tipoSelect = p.refillPrice != null ? `<select class="arom-select" id="${tipoSelectId}"><option value="Nuevo">Nuevo</option><option value="Refill">Refill</option></select>` : "";
+    const sel = selection[p.fid];
     const swatchClass = p.fit === "contain" ? " contain" : "";
+    const soldOutClass = p.soldOut ? " is-soldout" : "";
+    const photo = p.img
+      ? `<img src="assets/${p.img}.jpg" alt="${p.name}" loading="lazy">`
+      : `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:30px;">${p.icon}</div>`;
+
+    const tipoBlock = p.refillPrice != null
+      ? `<div class="field-label">Tipo</div>${chipRow(p.fid, "tipo", ["Nuevo","Refill"])}`
+      : "";
+    const colorBlock = p.colors
+      ? `<div class="field-label">Color</div>${swatchRow(p.fid, "color", p.colors)}`
+      : "";
+    const shapeBlock = p.shapes
+      ? `<div class="field-label">Forma</div>${chipRow(p.fid, "shape", p.shapes)}`
+      : "";
+    const aromaOptions = p.aromas
+      ? p.aromas.map(a => `<option value="${a.name}"${a.name===sel.aroma?" selected":""}>${a.name}</option>`).join("")
+      : "";
+    const aromaBlock = p.aromas
+      ? `<select class="arom-select" data-fid="${p.fid}" data-field="aroma">${aromaOptions}</select>`
+      : "";
+
+    const price = sel.tipo === "Refill" ? p.refillPrice : p.price;
+    const priceLabel = p.soldOut ? `<span class="p-price muted">${fmt(price)}</span>` : `<span class="p-price">${fmt(price)}</span>`;
+    const actionBtn = p.soldOut
+      ? `<button class="notify-btn" data-fid="${p.fid}" data-action="notify">Avisame</button>`
+      : `<button class="add-btn" data-fid="${p.fid}" data-action="add">Agregar</button>`;
+
     return `
-    <div class="card">
-      <div class="swatch${swatchClass}" style="background:${t.bg};">${swatchInner}</div>
-      <p class="p-name">${p.name}</p>
-      <span class="p-tag" style="background:${t.bg};color:${t.fg};">${p.cat}</span>
+    <div class="card${soldOutClass}">
+      <div class="card-photo${swatchClass}" style="${p.img ? "" : `background:${t.bg};`}">
+        ${photo}
+        <span class="cat-tag-overlay" style="color:${t.fg};">${p.cat}</span>
+        ${p.soldOut ? `<div class="soldout-ribbon">AGOTADO</div>` : ""}
+      </div>
+      <p class="p-name${p.soldOut ? " muted" : ""}">${p.name}</p>
       ${p.note ? `<p class="p-note">${p.note}</p>` : ""}
-      ${tipoSelect}
-      ${colorSelect}
-      ${shapeSelect}
-      <select class="arom-select" id="${selectId}">${options}</select>
+      ${tipoBlock}
+      ${colorBlock}
+      ${shapeBlock}
+      ${aromaBlock}
       <div class="p-row">
-        <span class="p-price" id="price-${p.fid}">${fmt(p.price)}</span>
-        <button class="add-btn" data-fid="${p.fid}">Agregar</button>
+        ${priceLabel}
+        ${actionBtn}
       </div>
     </div>`;
   }).join("");
-  document.querySelectorAll("select[id^='tipo-']").forEach(sel =>
-    sel.addEventListener("change", () => {
-      const fid = sel.id.replace("tipo-", "");
-      const card = formatCards.find(f => f.fid === fid);
-      const priceEl = document.getElementById("price-" + fid);
-      priceEl.textContent = fmt(sel.value === "Refill" ? card.refillPrice : card.price);
+
+  document.querySelectorAll(".swatch-dot, .chip-select").forEach(el =>
+    el.addEventListener("click", () => {
+      const { fid, field, value } = el.dataset;
+      selection[fid][field] = value;
+      renderGrid();
     })
   );
-  document.querySelectorAll(".add-btn").forEach(btn =>
-    btn.addEventListener("click", () => {
-      const card = formatCards.find(f => f.fid === btn.dataset.fid);
-      const aroma = document.getElementById("sel-" + card.fid).value;
-      const colorEl = document.getElementById("col-" + card.fid);
-      const color = colorEl ? colorEl.value : null;
-      const tipoEl = document.getElementById("tipo-" + card.fid);
-      const tipo = tipoEl ? tipoEl.value : null;
-      const shapeEl = document.getElementById("shp-" + card.fid);
-      const shape = shapeEl ? shapeEl.value : null;
-      addToCart(card, aroma, color, shape, tipo);
+  document.querySelectorAll("select[data-fid]").forEach(sel =>
+    sel.addEventListener("change", () => {
+      const { fid, field } = sel.dataset;
+      selection[fid][field] = sel.value;
+      renderGrid();
     })
+  );
+  document.querySelectorAll("[data-action='add']").forEach(btn =>
+    btn.addEventListener("click", () => addToCart(formatCards.find(f => f.fid === btn.dataset.fid)))
+  );
+  document.querySelectorAll("[data-action='notify']").forEach(btn =>
+    btn.addEventListener("click", () => notifyStock(formatCards.find(f => f.fid === btn.dataset.fid)))
   );
 }
 
@@ -297,19 +422,27 @@ function trackEvent(path, title){
   } catch(e) {}
 }
 
-function addToCart(card, aroma, color, shape, tipo){
+function addToCart(card){
   trackEvent("agregar/" + slugify(card.name), card.name);
-  const key = card.fid + "::" + aroma + (color ? "::" + color : "") + (shape ? "::" + shape : "") + (tipo ? "::" + tipo : "");
-  const price = tipo === "Refill" ? card.refillPrice : card.price;
+  const sel = selection[card.fid];
+  const key = card.fid + "::" + sel.aroma + (sel.color ? "::" + sel.color : "") + (sel.shape ? "::" + sel.shape : "") + (sel.tipo ? "::" + sel.tipo : "");
+  const price = sel.tipo === "Refill" ? card.refillPrice : card.price;
   if (cart[key]) {
     cart[key].qty += 1;
   } else {
-    cart[key] = {qty:1, cat:card.cat, name:card.name, aroma:aroma, color:color, shape:shape, tipo:tipo, price:price};
+    cart[key] = {qty:1, cat:card.cat, name:card.name, aroma:sel.aroma, color:sel.color, shape:sel.shape, tipo:sel.tipo, price:price, img:card.img};
   }
   saveCart();
   renderCart();
   openCart();
 }
+
+function notifyStock(card){
+  trackEvent("consulta-stock/" + slugify(card.name), card.name);
+  const msg = `Hola! Quiero que me avisen cuando vuelva a haber stock de ${card.name}.`;
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
+}
+
 function changeQty(key, delta){
   if (!cart[key]) return;
   cart[key].qty += delta;
@@ -332,12 +465,14 @@ function renderCart(){
     itemsEl.innerHTML = keys.map(k => {
       const it = cart[k];
       const detail = [it.shape, it.color, it.aroma, it.tipo].filter(Boolean).join(" · ");
+      const thumb = it.img ? `<img class="cart-item-photo" src="assets/${it.img}.jpg" alt="${it.name}">` : `<div class="cart-item-photo"></div>`;
       return `<div class="cart-item">
-        <div>
+        ${thumb}
+        <div style="flex:1;min-width:0;">
           <p style="font-size:13px;margin:0;">${it.name}</p>
           <p style="font-size:11px;margin:0;color:var(--text-muted);">${detail} · ${fmt(it.price)}</p>
         </div>
-        <div style="display:flex;align-items:center;gap:6px;">
+        <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
           <button class="qty-btn" data-key="${k}" data-delta="-1">−</button>
           <span style="font-size:13px;min-width:14px;text-align:center;">${it.qty}</span>
           <button class="qty-btn" data-key="${k}" data-delta="1">+</button>
