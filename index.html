@@ -36,6 +36,7 @@
     --rose:#B5638A;
     --rose-bg:#F3DDE6;
     --whatsapp:#2FAE60;
+    --deal:#23864A;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html{-webkit-text-size-adjust:100%;}
@@ -99,8 +100,12 @@
   .chip-row{display:flex;gap:6px;flex-wrap:wrap;}
 
   .p-row{display:flex;align-items:center;justify-content:space-between;margin-top:6px;}
-  .p-price{font-size:16px;font-weight:600;color:var(--brand-dark);}
+  .p-prices{display:flex;flex-direction:column;gap:1px;}
+  .p-old{font-size:12.5px;color:var(--text-muted);text-decoration:line-through;}
+  .p-now{display:flex;align-items:center;gap:6px;}
+  .p-price{font-size:18px;font-weight:600;color:var(--brand-dark);}
   .p-price.muted{color:var(--text-muted);}
+  .off-badge{background:var(--deal);color:#fff;font-size:11px;font-weight:600;padding:2px 5px;border-radius:3px;line-height:1.3;}
   .add-btn{background:var(--brand);color:#fff;border:none;border-radius:8px;padding:10px 14px;font-size:13px;cursor:pointer;min-height:40px;}
   .add-btn:hover{background:var(--brand-dark);}
   .notify-btn{background:transparent;border:1px solid var(--border);color:var(--text-muted);border-radius:8px;padding:10px 14px;font-size:12.5px;cursor:pointer;min-height:40px;}
@@ -223,6 +228,9 @@
 
 <script>
 const WHATSAPP_NUMBER = "5491158707134";
+// Descuento sobre el precio de lista: se muestra el de lista tachado y al carrito va el precio final. 0 = sin descuento.
+const DISCOUNT = 0.15;
+const finalPrice = n => (n == null || !DISCOUNT) ? n : Math.round(n * (1 - DISCOUNT));
 
 // Cada aroma/color lleva un color aproximado de cera para el swatch visual.
 const aromasDifusor = [
@@ -236,17 +244,17 @@ const aromasVelas = [
   {name:"Coco vainilla", color:"#F3E9D2"}
 ];
 const difusorFormats = [
-  {name:"Difusor 50ml", price:6050, refillPrice:4400, img:"DIF-50"},
-  {name:"Difusor 100ml", price:8800, refillPrice:6600, img:"DIF-100"},
-  {name:"Difusor 200ml", price:13200, refillPrice:9900, img:"DIF-200"},
-  {name:"Difusor 200ml + flor", price:18150, img:"DIF-200F"}
+  {name:"Difusor 50ml", price:6000, refillPrice:4500, img:"DIF-50"},
+  {name:"Difusor 100ml", price:9000, refillPrice:6500, img:"DIF-100"},
+  {name:"Difusor 200ml", price:13000, refillPrice:10000, img:"DIF-200"},
+  {name:"Difusor 200ml + flor", price:18000, img:"DIF-200F"}
 ];
 const souvenirFormats = [
-  {name:"Mini burbuja", price:3300, img:"SV-MINIB"},
-  {name:"Corazón", price:7150, img:"SV-CORAZON"},
-  {name:"Peonía grande", price:7150, img:"SV-PEONIAG"},
-  {name:"Peonía chica", price:3300, img:"SV-PEONIAC", note:"No incluye base de madera"},
-  {name:"Cactus", price:3300, img:"SV-CACTUS", note:"No incluye base de madera"}
+  {name:"Mini burbuja", price:3500, img:"SV-MINIB"},
+  {name:"Corazón", price:7000, img:"SV-CORAZON"},
+  {name:"Peonía grande", price:7000, img:"SV-PEONIAG"},
+  {name:"Peonía chica", price:3500, img:"SV-PEONIAC", note:"No incluye base de madera"},
+  {name:"Cactus", price:3500, img:"SV-CACTUS", note:"No incluye base de madera"}
 ];
 const conoColores = [
   {name:"Champagne mate", color:"#D8C7A1"},
@@ -255,14 +263,14 @@ const conoColores = [
   {name:"Rosé mate", color:"#D9A9A6"}
 ];
 const aromaticaFormats = [
-  {name:"Cuenco de madera", price:8250, img:"VA-CUENCOM"},
-  {name:"Cuenco negro", price:14850, img:"VA-CUENCON"},
-  {name:"Volcán", price:11550, img:"VA-VOLCAN"},
-  {name:"Cono Colores", price:8250, img:"VA-CONO", colors:conoColores},
-  {name:"Cono negro", price:8250, img:"VA-CONONEG"},
-  {name:"Esmerilado blanco", price:11550, img:"VA-ESMBLA"},
-  {name:"Esmerilado ámbar", price:11550, img:"VA-ESMAMB"},
-  {name:"Caramelera", price:9350, img:"VA-CARAMEL"}
+  {name:"Cuenco de madera", price:8500, img:"VA-CUENCOM"},
+  {name:"Cuenco negro", price:15000, img:"VA-CUENCON"},
+  {name:"Volcán", price:11500, img:"VA-VOLCAN"},
+  {name:"Cono Colores", price:8500, img:"VA-CONO", colors:conoColores},
+  {name:"Cono negro", price:8500, img:"VA-CONONEG"},
+  {name:"Esmerilado blanco", price:11500, img:"VA-ESMBLA"},
+  {name:"Esmerilado ámbar", price:11500, img:"VA-ESMAMB"},
+  {name:"Caramelera", price:9500, img:"VA-CARAMEL"}
 ];
 const aromasBombones = [
   {name:"Coco vainilla", color:"#F3E9D2"},
@@ -274,8 +282,8 @@ const aromasBombones = [
 ];
 const formasBombones = ["Surtido","Donuts","Corazones","Estrellitas","Letras","Florcitas","Tabletitas","Tréboles"];
 const bombonFormats = [
-  {name:"Bolsita 40g", price:3300, img:"BOMBON"},
-  {name:"Cajita 100g", price:7150, img:"BOMBON"}
+  {name:"Bolsita 40g", price:3500, img:"BOMBON"},
+  {name:"Cajita 100g", price:7000, img:"BOMBON"}
 ];
 
 function buildFormatCards(){
@@ -305,9 +313,10 @@ const toneMap = {
 const cats = ["Todos","Difusores","Velas souvenir","Velas aromáticas","Bombones Hornito"];
 let activeCat = "Todos";
 let cart = {};
-try { cart = JSON.parse(localStorage.getItem("ndh_cart2") || "{}"); } catch(e) { cart = {}; }
+// La clave cambia con cada cambio de precios para que no queden carritos guardados con precios viejos.
+try { cart = JSON.parse(localStorage.getItem("ndh_cart3") || "{}"); } catch(e) { cart = {}; }
 const fmt = n => (n === null || n === undefined) ? "A confirmar" : "$" + Math.round(n).toLocaleString("es-AR");
-const saveCart = () => { try { localStorage.setItem("ndh_cart2", JSON.stringify(cart)); } catch(e) {} };
+const saveCart = () => { try { localStorage.setItem("ndh_cart3", JSON.stringify(cart)); } catch(e) {} };
 
 // Selección actual de aroma/color/forma/tipo por tarjeta, aparte del carrito.
 const selection = {};
@@ -364,8 +373,16 @@ function variantHTML(p, sel){
   const shapeBlock = p.shapes
     ? `<div class="field-label">Forma</div>${chipRow(p.fid, "shape", p.shapes)}`
     : "";
-  const price = sel.tipo === "Refill" ? p.refillPrice : p.price;
-  const priceLabel = p.soldOut ? `<span class="p-price muted">${fmt(price)}</span>` : `<span class="p-price">${fmt(price)}</span>`;
+  const listPrice = sel.tipo === "Refill" ? p.refillPrice : p.price;
+  const price = finalPrice(listPrice);
+  const hasDiscount = DISCOUNT && listPrice != null;
+  const priceLabel = `<div class="p-prices">
+      ${hasDiscount ? `<span class="p-old">${fmt(listPrice)}</span>` : ""}
+      <div class="p-now">
+        <span class="p-price${p.soldOut ? " muted" : ""}">${fmt(price)}</span>
+        ${hasDiscount ? `<span class="off-badge">${Math.round(DISCOUNT * 100)}% OFF</span>` : ""}
+      </div>
+    </div>`;
   const actionBtn = p.soldOut
     ? `<button class="notify-btn" data-fid="${p.fid}" data-action="notify">Avisame</button>`
     : `<button class="add-btn" data-fid="${p.fid}" data-action="add">Agregar</button>`;
@@ -458,7 +475,7 @@ function addToCart(card){
   trackEvent("agregar/" + slugify(card.name), card.name);
   const sel = selection[card.fid];
   const key = card.fid + "::" + sel.aroma + (sel.color ? "::" + sel.color : "") + (sel.shape ? "::" + sel.shape : "") + (sel.tipo ? "::" + sel.tipo : "");
-  const price = sel.tipo === "Refill" ? card.refillPrice : card.price;
+  const price = finalPrice(sel.tipo === "Refill" ? card.refillPrice : card.price);
   if (cart[key]) {
     cart[key].qty += 1;
   } else {
