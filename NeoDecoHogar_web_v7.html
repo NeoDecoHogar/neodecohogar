@@ -64,7 +64,7 @@
   /* Promo banner */
   .promo-banner{background:var(--coral);color:var(--card);text-align:center;padding:18px 16px;font-family:'Poppins',system-ui,sans-serif;font-size:16px;font-weight:500;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:6px 14px;flex-wrap:wrap;}
   .promo-banner .promo-tag{background:var(--card);color:var(--coral);font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;padding:5px 14px;border-radius:999px;}
-  .promo-banner .promo-off{font-size:26px;font-weight:600;line-height:1.1;}
+  .promo-banner .promo-main{font-size:24px;font-weight:600;line-height:1.1;}
 
   /* Trust strip */
   .trust-strip{display:flex;justify-content:space-between;gap:6px;padding:16px 20px;max-width:1040px;margin:0 auto;background:var(--card);border-bottom:1px solid var(--border);}
@@ -134,7 +134,7 @@
     .hero-content h1{font-size:22px;}
     .hero-content p{font-size:13px;}
     .promo-banner{padding:14px 16px;font-size:14px;}
-    .promo-banner .promo-off{font-size:22px;}
+    .promo-banner .promo-main{font-size:20px;}
     .trust-strip{padding:14px 16px;}
     .filters{padding:14px 16px;gap:6px;}
     .filter-btn{padding:7px 14px;font-size:12.5px;}
@@ -167,8 +167,7 @@
 
 <div class="promo-banner">
   <span class="promo-tag">Cyber Week</span>
-  <span class="promo-off">15% de descuento</span>
-  <span>Noviembre 2 al 6</span>
+  <span class="promo-main">Noviembre 2 al 6</span>
 </div>
 
 <div class="hero-banner">
@@ -228,9 +227,10 @@
 
 <script>
 const WHATSAPP_NUMBER = "5491158707134";
-// Descuento sobre el precio de lista: se muestra el de lista tachado y al carrito va el precio final. 0 = sin descuento.
-const DISCOUNT = 0.15;
-const finalPrice = n => (n == null || !DISCOUNT) ? n : Math.round(n * (1 - DISCOUNT));
+// Descuento sobre el precio de lista según el tramo de precio (5% los más baratos, 10% los más caros).
+// Se muestra el de lista tachado y al carrito va el precio final.
+const discountFor = n => n == null ? 0 : n <= 5000 ? 0.05 : n <= 10000 ? 0.07 : 0.10;
+const finalPrice = n => n == null ? n : Math.round(n * (1 - discountFor(n)));
 
 // Cada aroma/color lleva un color aproximado de cera para el swatch visual.
 const aromasDifusor = [
@@ -244,15 +244,15 @@ const aromasVelas = [
   {name:"Coco vainilla", color:"#F3E9D2"}
 ];
 const difusorFormats = [
-  {name:"Difusor 50ml", price:6000, refillPrice:4500, img:"DIF-50"},
-  {name:"Difusor 100ml", price:9000, refillPrice:6500, img:"DIF-100"},
-  {name:"Difusor 200ml", price:13000, refillPrice:10000, img:"DIF-200"},
-  {name:"Difusor 200ml + flor", price:18000, img:"DIF-200F"}
+  {name:"Difusor 50ml", price:6500, refillPrice:4500, img:"DIF-50"},
+  {name:"Difusor 100ml", price:9000, refillPrice:7000, img:"DIF-100"},
+  {name:"Difusor 200ml", price:14000, refillPrice:10500, img:"DIF-200"},
+  {name:"Difusor 200ml + flor", price:19000, img:"DIF-200F"}
 ];
 const souvenirFormats = [
   {name:"Mini burbuja", price:3500, img:"SV-MINIB"},
-  {name:"Corazón", price:7000, img:"SV-CORAZON"},
-  {name:"Peonía grande", price:7000, img:"SV-PEONIAG"},
+  {name:"Corazón", price:7500, img:"SV-CORAZON"},
+  {name:"Peonía grande", price:7500, img:"SV-PEONIAG"},
   {name:"Peonía chica", price:3500, img:"SV-PEONIAC", note:"No incluye base de madera"},
   {name:"Cactus", price:3500, img:"SV-CACTUS", note:"No incluye base de madera"}
 ];
@@ -264,13 +264,13 @@ const conoColores = [
 ];
 const aromaticaFormats = [
   {name:"Cuenco de madera", price:8500, img:"VA-CUENCOM"},
-  {name:"Cuenco negro", price:15000, img:"VA-CUENCON"},
-  {name:"Volcán", price:11500, img:"VA-VOLCAN"},
+  {name:"Cuenco negro", price:15500, img:"VA-CUENCON"},
+  {name:"Volcán", price:12000, img:"VA-VOLCAN"},
   {name:"Cono Colores", price:8500, img:"VA-CONO", colors:conoColores},
   {name:"Cono negro", price:8500, img:"VA-CONONEG"},
-  {name:"Esmerilado blanco", price:11500, img:"VA-ESMBLA"},
-  {name:"Esmerilado ámbar", price:11500, img:"VA-ESMAMB"},
-  {name:"Caramelera", price:9500, img:"VA-CARAMEL"}
+  {name:"Esmerilado blanco", price:12000, img:"VA-ESMBLA"},
+  {name:"Esmerilado ámbar", price:12000, img:"VA-ESMAMB"},
+  {name:"Caramelera", price:10000, img:"VA-CARAMEL"}
 ];
 const aromasBombones = [
   {name:"Coco vainilla", color:"#F3E9D2"},
@@ -283,7 +283,7 @@ const aromasBombones = [
 const formasBombones = ["Surtido","Donuts","Corazones","Estrellitas","Letras","Florcitas","Tabletitas","Tréboles"];
 const bombonFormats = [
   {name:"Bolsita 40g", price:3500, img:"BOMBON"},
-  {name:"Cajita 100g", price:7000, img:"BOMBON"}
+  {name:"Cajita 100g", price:7500, img:"BOMBON"}
 ];
 
 function buildFormatCards(){
@@ -314,9 +314,9 @@ const cats = ["Todos","Difusores","Velas souvenir","Velas aromáticas","Bombones
 let activeCat = "Todos";
 let cart = {};
 // La clave cambia con cada cambio de precios para que no queden carritos guardados con precios viejos.
-try { cart = JSON.parse(localStorage.getItem("ndh_cart3") || "{}"); } catch(e) { cart = {}; }
+try { cart = JSON.parse(localStorage.getItem("ndh_cart4") || "{}"); } catch(e) { cart = {}; }
 const fmt = n => (n === null || n === undefined) ? "A confirmar" : "$" + Math.round(n).toLocaleString("es-AR");
-const saveCart = () => { try { localStorage.setItem("ndh_cart3", JSON.stringify(cart)); } catch(e) {} };
+const saveCart = () => { try { localStorage.setItem("ndh_cart4", JSON.stringify(cart)); } catch(e) {} };
 
 // Selección actual de aroma/color/forma/tipo por tarjeta, aparte del carrito.
 const selection = {};
@@ -375,12 +375,13 @@ function variantHTML(p, sel){
     : "";
   const listPrice = sel.tipo === "Refill" ? p.refillPrice : p.price;
   const price = finalPrice(listPrice);
-  const hasDiscount = DISCOUNT && listPrice != null;
+  const discount = discountFor(listPrice);
+  const hasDiscount = discount > 0;
   const priceLabel = `<div class="p-prices">
       ${hasDiscount ? `<span class="p-old">${fmt(listPrice)}</span>` : ""}
       <div class="p-now">
         <span class="p-price${p.soldOut ? " muted" : ""}">${fmt(price)}</span>
-        ${hasDiscount ? `<span class="off-badge">${Math.round(DISCOUNT * 100)}% OFF</span>` : ""}
+        ${hasDiscount ? `<span class="off-badge">${Math.round(discount * 100)}% OFF</span>` : ""}
       </div>
     </div>`;
   const actionBtn = p.soldOut
