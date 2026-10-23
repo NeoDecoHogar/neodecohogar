@@ -61,8 +61,9 @@
   .hero-cta{display:inline-flex;align-items:center;gap:6px;background:var(--card);color:var(--brand-dark);font-family:'Poppins',system-ui,sans-serif;font-weight:600;font-size:13.5px;padding:11px 18px;border-radius:999px;margin-top:14px;text-decoration:none;}
 
   /* Promo banner */
-  .promo-banner{background:var(--coral);color:var(--card);text-align:center;padding:10px 16px;font-family:'Poppins',system-ui,sans-serif;font-size:14px;font-weight:600;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;}
-  .promo-banner .promo-tag{background:var(--card);color:var(--coral);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;padding:3px 10px;border-radius:999px;}
+  .promo-banner{background:var(--coral);color:var(--card);text-align:center;padding:18px 16px;font-family:'Poppins',system-ui,sans-serif;font-size:16px;font-weight:500;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:6px 14px;flex-wrap:wrap;}
+  .promo-banner .promo-tag{background:var(--card);color:var(--coral);font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;padding:5px 14px;border-radius:999px;}
+  .promo-banner .promo-off{font-size:26px;font-weight:600;line-height:1.1;}
 
   /* Trust strip */
   .trust-strip{display:flex;justify-content:space-between;gap:6px;padding:16px 20px;max-width:1040px;margin:0 auto;background:var(--card);border-bottom:1px solid var(--border);}
@@ -127,6 +128,8 @@
     .hero-content{padding:18px 16px;}
     .hero-content h1{font-size:22px;}
     .hero-content p{font-size:13px;}
+    .promo-banner{padding:14px 16px;font-size:14px;}
+    .promo-banner .promo-off{font-size:22px;}
     .trust-strip{padding:14px 16px;}
     .filters{padding:14px 16px;gap:6px;}
     .filter-btn{padding:7px 14px;font-size:12.5px;}
@@ -159,6 +162,7 @@
 
 <div class="promo-banner">
   <span class="promo-tag">Cyber Week</span>
+  <span class="promo-off">15% de descuento</span>
   <span>Noviembre 2 al 6</span>
 </div>
 
@@ -232,17 +236,17 @@ const aromasVelas = [
   {name:"Coco vainilla", color:"#F3E9D2"}
 ];
 const difusorFormats = [
-  {name:"Difusor 50ml", price:5500, refillPrice:4000, img:"DIF-50"},
-  {name:"Difusor 100ml", price:8000, refillPrice:6000, img:"DIF-100"},
-  {name:"Difusor 200ml", price:12000, refillPrice:9000, img:"DIF-200"},
-  {name:"Difusor 200ml + flor", price:16500, img:"DIF-200F"}
+  {name:"Difusor 50ml", price:6050, refillPrice:4400, img:"DIF-50"},
+  {name:"Difusor 100ml", price:8800, refillPrice:6600, img:"DIF-100"},
+  {name:"Difusor 200ml", price:13200, refillPrice:9900, img:"DIF-200"},
+  {name:"Difusor 200ml + flor", price:18150, img:"DIF-200F"}
 ];
 const souvenirFormats = [
-  {name:"Mini burbuja", price:3000, img:"SV-MINIB"},
-  {name:"Corazón", price:6500, img:"SV-CORAZON"},
-  {name:"Peonía grande", price:6500, img:"SV-PEONIAG"},
-  {name:"Peonía chica", price:3000, img:"SV-PEONIAC", note:"No incluye base de madera"},
-  {name:"Cactus", price:3000, img:"SV-CACTUS", note:"No incluye base de madera"}
+  {name:"Mini burbuja", price:3300, img:"SV-MINIB"},
+  {name:"Corazón", price:7150, img:"SV-CORAZON"},
+  {name:"Peonía grande", price:7150, img:"SV-PEONIAG"},
+  {name:"Peonía chica", price:3300, img:"SV-PEONIAC", note:"No incluye base de madera"},
+  {name:"Cactus", price:3300, img:"SV-CACTUS", note:"No incluye base de madera"}
 ];
 const conoColores = [
   {name:"Champagne mate", color:"#D8C7A1"},
@@ -251,14 +255,14 @@ const conoColores = [
   {name:"Rosé mate", color:"#D9A9A6"}
 ];
 const aromaticaFormats = [
-  {name:"Cuenco de madera", price:7500, img:"VA-CUENCOM"},
-  {name:"Cuenco negro", price:13500, img:"VA-CUENCON"},
-  {name:"Volcán", price:10500, img:"VA-VOLCAN"},
-  {name:"Cono Colores", price:7500, img:"VA-CONO", colors:conoColores},
-  {name:"Cono negro", price:7500, img:"VA-CONONEG"},
-  {name:"Esmerilado blanco", price:10500, img:"VA-ESMBLA"},
-  {name:"Esmerilado ámbar", price:10500, img:"VA-ESMAMB"},
-  {name:"Caramelera", price:8500, img:"VA-CARAMEL"}
+  {name:"Cuenco de madera", price:8250, img:"VA-CUENCOM"},
+  {name:"Cuenco negro", price:14850, img:"VA-CUENCON"},
+  {name:"Volcán", price:11550, img:"VA-VOLCAN"},
+  {name:"Cono Colores", price:8250, img:"VA-CONO", colors:conoColores},
+  {name:"Cono negro", price:8250, img:"VA-CONONEG"},
+  {name:"Esmerilado blanco", price:11550, img:"VA-ESMBLA"},
+  {name:"Esmerilado ámbar", price:11550, img:"VA-ESMAMB"},
+  {name:"Caramelera", price:9350, img:"VA-CARAMEL"}
 ];
 const aromasBombones = [
   {name:"Coco vainilla", color:"#F3E9D2"},
@@ -270,8 +274,8 @@ const aromasBombones = [
 ];
 const formasBombones = ["Surtido","Donuts","Corazones","Estrellitas","Letras","Florcitas","Tabletitas","Tréboles"];
 const bombonFormats = [
-  {name:"Bolsita 40g", price:3000, img:"BOMBON"},
-  {name:"Cajita 100g", price:6500, img:"BOMBON"}
+  {name:"Bolsita 40g", price:3300, img:"BOMBON"},
+  {name:"Cajita 100g", price:7150, img:"BOMBON"}
 ];
 
 function buildFormatCards(){
