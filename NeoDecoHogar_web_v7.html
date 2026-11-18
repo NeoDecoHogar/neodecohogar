@@ -16,7 +16,7 @@
 <meta name="twitter:image" content="https://neodecohogar.github.io/neodecohogar/assets/og_image_nov26.jpg">
 <link rel="icon" href="assets/logo_black.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --brand:#8A5A3B;
@@ -63,9 +63,11 @@
   .hero-content p{margin:8px 0 0;font-size:13.5px;color:var(--cream);line-height:1.5;max-width:420px;}
   .hero-cta{display:inline-flex;align-items:center;gap:6px;background:var(--card);color:var(--brand-dark);font-family:'Poppins',system-ui,sans-serif;font-weight:600;font-size:13.5px;padding:11px 18px;border-radius:999px;margin-top:14px;text-decoration:none;}
 
-  /* Promo banner */
-  .promo-banner{background:#1E1915;color:var(--card);text-align:center;padding:18px 16px;font-family:'Poppins',system-ui,sans-serif;font-size:16px;font-weight:500;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:6px 14px;flex-wrap:wrap;}
-  .promo-banner .promo-main{font-size:24px;font-weight:600;line-height:1.1;text-transform:uppercase;letter-spacing:2px;}
+  /* Etiqueta promo colgando sobre la foto principal (pared lisa arriba a la derecha) */
+  .promo-tag{position:absolute;top:0;right:7%;width:clamp(150px,27%,240px);transform-origin:27% 0;transform:rotate(-6deg);pointer-events:none;filter:drop-shadow(0 6px 10px rgba(30,25,21,0.28));animation:tag-settle 1400ms var(--ease-out) both;}
+  .promo-tag text{font-family:'Poppins',system-ui,sans-serif;font-weight:700;letter-spacing:1.5px;}
+  /* Se acomoda una sola vez al cargar, como una etiqueta que se termina de balancear. */
+  @keyframes tag-settle{0%{transform:rotate(-16deg);}45%{transform:rotate(-2deg);}75%{transform:rotate(-8deg);}100%{transform:rotate(-6deg);}}
 
   /* Trust strip */
   .trust-strip{display:flex;justify-content:space-between;gap:6px;padding:16px 20px;max-width:1040px;margin:0 auto;background:var(--card);border-bottom:1px solid var(--border);}
@@ -135,6 +137,7 @@
     .add-btn:hover{background:var(--brand-dark);}
   }
   @media (prefers-reduced-motion:reduce){
+    .promo-tag{animation:none;}
     #cartPanel{transform:none;opacity:0;visibility:hidden;transition:opacity 200ms ease,visibility 0s linear 200ms;}
     #cartPanel.open{opacity:1;visibility:visible;transition:opacity 200ms ease;}
   }
@@ -150,8 +153,9 @@
     .hero-content{padding:18px 16px;}
     .hero-content h1{font-size:22px;}
     .hero-content p{font-size:13px;}
-    .promo-banner{padding:14px 16px;font-size:14px;}
-    .promo-banner .promo-main{font-size:20px;}
+    /* En el celular el texto ocupa todo el ancho de arriba: la etiqueta va abajo a la derecha, sin hilo. */
+    .promo-tag{top:auto;bottom:7%;right:7%;width:112px;}
+    .promo-tag .tag-string{display:none;}
     .trust-strip{padding:14px 16px;}
     .filters{padding:14px 16px;gap:6px;}
     .filter-btn{padding:7px 14px;font-size:12.5px;}
@@ -182,13 +186,17 @@
   </button>
 </header>
 
-<div class="promo-banner">
-  <span class="promo-main">Black Friday</span>
-</div>
-
 <div class="hero-banner">
   <img src="assets/VA-CARAMEL-hero.jpg" alt="Vela aromática Caramelera de NeoDeco">
   <div class="hero-overlay"></div>
+  <svg class="promo-tag" viewBox="0 -110 260 260" role="img" aria-label="Black Friday">
+    <path class="tag-string" d="M70 -110 C 66 -60, 44 -20, 41 62" fill="none" stroke="#F0E2CE" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M52 14 H246 V136 H52 L12 75 Z" fill="#1E1915" stroke="#1E1915" stroke-width="14" stroke-linejoin="round"/>
+    <path d="M58 24 H236 V126 H58 L26 75 Z" fill="none" stroke="#F0E2CE" stroke-opacity=".45" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <circle cx="41" cy="75" r="8" fill="#F0E2CE" stroke="#C9A66B" stroke-width="3"/>
+    <text x="146" y="70" text-anchor="middle" font-size="38" fill="#FFFDF9">BLACK</text>
+    <text x="146" y="112" text-anchor="middle" font-size="38" fill="#E8875F">FRIDAY</text>
+  </svg>
   <div class="hero-content">
     <div class="hero-kicker">Catálogo Noviembre 2026</div>
     <h1>Tu casa, con aroma propio</h1>
