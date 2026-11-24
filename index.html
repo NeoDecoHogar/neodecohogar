@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
-<title>NeoDeco — Catálogo Noviembre 2026</title>
+<title>NeoDeco — Catálogo Diciembre 2026</title>
 <meta name="description" content="Difusores, velas souvenir y velas aromáticas en los aromas de NeoDeco. Armá tu pedido y coordinamos por WhatsApp.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://neodecohogar.github.io/neodecohogar/">
-<meta property="og:title" content="NeoDeco — Catálogo Noviembre 2026">
+<meta property="og:title" content="NeoDeco — Catálogo Diciembre 2026">
 <meta property="og:description" content="Difusores, velas souvenir y velas aromáticas en los aromas de NeoDeco. Armá tu pedido y coordinamos por WhatsApp.">
-<meta property="og:image" content="https://neodecohogar.github.io/neodecohogar/assets/og_image_nov26.jpg">
+<meta property="og:image" content="https://neodecohogar.github.io/neodecohogar/assets/og_image_dic26.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="NeoDeco — Catálogo Noviembre 2026">
+<meta name="twitter:title" content="NeoDeco — Catálogo Diciembre 2026">
 <meta name="twitter:description" content="Difusores, velas souvenir y velas aromáticas en los aromas de NeoDeco.">
-<meta name="twitter:image" content="https://neodecohogar.github.io/neodecohogar/assets/og_image_nov26.jpg">
+<meta name="twitter:image" content="https://neodecohogar.github.io/neodecohogar/assets/og_image_dic26.jpg">
 <link rel="icon" href="assets/logo_black.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -191,7 +191,7 @@
   <img src="assets/HERO-NAVIDAD.jpg" alt="Velas navideñas de NeoDeco junto a un arbolito de Navidad">
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-kicker">Catálogo Noviembre 2026</div>
+    <div class="hero-kicker">Catálogo Diciembre 2026</div>
     <h1>Esta Navidad, regalá aroma</h1>
     <p>Velas, combos y hornitos hechos a mano, listos para regalar. Armá tu pedido y coordinamos por WhatsApp.</p>
     <a class="hero-cta" href="#catalogo" data-cat="Navidad">
@@ -326,8 +326,8 @@ const navidadFormats = [
 ];
 // Hornitos: van en Bombones Hornito y también se muestran en Navidad.
 const hornitoFormats = [
-  {name:"Hornito celeste", price:10000, img:"HOR-CELESTE"},
-  {name:"Hornito rojo", price:10000, img:"HOR-ROJO"}
+  {name:"Hornito celeste", price:12000, img:"HOR-CELESTE"},
+  {name:"Hornito rojo", price:12000, img:"HOR-ROJO"}
 ];
 const bombonFormats = [
   {name:"Bolsita 40g", price:3500, img:"BOMBON"},
@@ -369,9 +369,9 @@ const cats = ["Todos","Navidad","Difusores","Velas souvenir","Velas aromáticas"
 let activeCat = "Todos";
 let cart = {};
 // La clave cambia con cada cambio de precios para que no queden carritos guardados con precios viejos.
-try { cart = JSON.parse(localStorage.getItem("ndh_cart5") || "{}"); } catch(e) { cart = {}; }
+try { cart = JSON.parse(localStorage.getItem("ndh_cart6") || "{}"); } catch(e) { cart = {}; }
 const fmt = n => (n === null || n === undefined) ? "A confirmar" : "$" + Math.round(n).toLocaleString("es-AR");
-const saveCart = () => { try { localStorage.setItem("ndh_cart5", JSON.stringify(cart)); } catch(e) {} };
+const saveCart = () => { try { localStorage.setItem("ndh_cart6", JSON.stringify(cart)); } catch(e) {} };
 
 // Selección actual de aroma/color/forma/tipo por tarjeta, aparte del carrito.
 const selection = {};
