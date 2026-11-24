@@ -168,6 +168,11 @@
   @media (max-width:380px){
     #cartPanel{width:100vw;max-width:100vw;}
   }
+  @media (max-width:600px){
+    .card-photo.is-combo{aspect-ratio:auto;}
+    .card-photo.is-combo .combo-photo{position:relative;inset:auto;padding:40px 10px 16px;}
+    .card-photo.is-combo .combo-pair{width:100%;}
+  }
 </style>
 <script data-goatcounter="https://neodeco.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
@@ -500,7 +505,7 @@ function renderGrid(){
 
     return `
     <div class="card${soldOutClass}">
-      <div class="card-photo${swatchClass}" style="${p.img ? "" : `background:${t.bg};`}">
+      <div class="card-photo${swatchClass}${p.parts ? " is-combo" : ""}" style="${p.img ? "" : `background:${t.bg};`}">
         ${photo}
         <span class="cat-tag-overlay" style="color:${t.fg};">${p.cat}</span>
         ${p.soldOut ? `<div class="soldout-ribbon">AGOTADO</div>` : ""}
